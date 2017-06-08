@@ -85,6 +85,7 @@ function changeRelacion(){
     parientes = ["Seleccionar", "Amigos", "Familiar", "Compañeros de trabajo", "Compañeros de escuela", "Vecinos"];
 }
 var usuarioPersonal = "";
+
 function accion(){
     var lineas = separarLineas(document.getElementById("conversacion").value + "\n");
     usuarios = identificarUsuarios(lineas);
@@ -138,6 +139,8 @@ function accion(){
     }
     document.getElementById("contenido").innerHTML += "<a href=\"#\" class=\"button\" onclick=\"subir();\" > Enviar</a>";
 }
+
+
 function grupoRelacion(valor) {
     tamano = usuarios.length;
     if(tamano > 2) {
@@ -325,11 +328,17 @@ function separarLineas(texto){
 function identificarUsuarios(lineas) {
     usuarios = [];
     for (i = 0; i < lineas.length; i++){
-		re = /..\d.\d{2}.(AM|PM)..\d.\d{2}.\d{4}..(.*):.*/;
+		//re = /..\d.\d{2}.(AM|PM)..\d.\d{2}.\d{4}..(.*):.*/; //Expresión regular anterior
+		//[11:11 am, 11/11/1111] : NOMBRE A RESCATAR
+		
+		//Nueva expresión regular
+		re = /.\d{2}.\d{2}..\d.\d.\d{4}..(.*):.*/;
+		//v.g. [11:20, 7/6/2017] NOMBRE: MENSAJE
+		alert();
         if (re.test(lineas[i-2])){
 			//var newstr = lineas.replace(re, "$2");
             if (i > 0 && i < lineas.length) {
-				var newstr = lineas[i-1].replace(re, "$2");
+				var newstr = lineas[i-1].replace(re, "$1");
                 if(lineas[i-1] == lineas[i+1]){
 					
                     if(usuarios.indexOf(lineas[i-1]) == -1)
@@ -363,7 +372,6 @@ function generarLlave(){
     xhttp.send();
 	//.send(envía la petición al servidor)
 }
-
 function randomString(length, chars) {
     var result = '';
     for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
