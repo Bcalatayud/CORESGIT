@@ -334,7 +334,7 @@ function identificarUsuarios(lineas) {
 		//Nueva expresión regular
 		re = /.\d{2}.\d{2}..\d.\d.\d{4}..(.*):.*/;
 		//v.g. [11:20, 7/6/2017] NOMBRE: MENSAJE
-		alert();
+		alert(re);
         if (re.test(lineas[i-2])){
 			//var newstr = lineas.replace(re, "$2");
             if (i > 0 && i < lineas.length) {
